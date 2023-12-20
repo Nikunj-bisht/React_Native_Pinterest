@@ -9,21 +9,23 @@ import {
   View,
 } from 'react-native';
 
-const PostedImages = ({item, onPress}) => {
+export const PostedImages = ({item, onPress = () => {}}) => {
   console.log(item);
   return (
     <TouchableHighlight
-      onPress={() => onPress()}
+      onPress={() => onPress(item.id)}
       style={[styles.imagecontainer]}>
-        <>
-      <Image
-        style={[styles.image, {height: getRandomHeight()}]}
-        resizeMode="cover"
-        source={{uri: item.src.medium}}></Image>
-      <Text numberOfLines={2} style={{paddingHorizontal: 10, marginTop: 5}}>
-        {item.alt}
-      </Text>
-        </>
+      <>
+        <Image
+          style={[styles.image]}
+          resizeMode="cover"
+          source={{uri: item.src.medium}}></Image>
+        <Text
+          numberOfLines={2}
+          style={{paddingHorizontal: 10, marginTop: 5, height: 30}}>
+          {item.alt}
+        </Text>
+      </>
     </TouchableHighlight>
   );
 };
@@ -31,7 +33,7 @@ const PostedImages = ({item, onPress}) => {
 function DashBoard({navigation}) {
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch('https://api.pexels.com/v1/curated?per_page=10&page=8', {
+    fetch('https://api.pexels.com/v1/curated?per_page=100&page=8', {
       headers: {
         Authorization:
           'yKt6IciAc8Wgqf1A6C4RwKEa8y4nis42UQgRkhsdOJDpC0gDUOya2O1G',
@@ -40,8 +42,10 @@ function DashBoard({navigation}) {
       .then(res => res.json())
       .then(dat => setData(dat.photos));
   }, []);
-  function gotoPostDetails() {
-    navigation.navigate('detail');
+  function gotoPostDetails(id) {
+    navigation.navigate('detail', {
+      id: id,
+    });
   }
   return (
     <View style={styles.container}>
@@ -63,7 +67,7 @@ function DashBoard({navigation}) {
           estimatedItemSize={200}
           data={data}
           numColumns={2}
-          ItemSeparatorComponent={() => <View style={{height: 20}} />}
+          // ItemSeparatorComponent={() => <View style={{height: 20}} />}
           extraData={data}
           renderItem={({item}) => {
             return <PostedImages item={item} onPress={gotoPostDetails} />;
@@ -84,18 +88,17 @@ const styles = StyleSheet.create({
   },
   imagecontainer: {
     width: '100%',
-    // height: 400,
+    height: 330,
     // marginTop: 12,
     justifyContent: 'center',
     paddingHorizontal: 4,
-
-    backgroundColor: 'white',
+    // flexWrap:'wrap-reverse'
     // height: '100%',
     // flex:1
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: '88%',
     borderRadius: 20,
   },
 });

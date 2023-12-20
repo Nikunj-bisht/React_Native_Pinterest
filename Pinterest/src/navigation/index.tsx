@@ -26,7 +26,7 @@ function Navigation() {
             options={{headerShown: false}}
             component={Home}
             name="home"></Stack.Screen>
-            <Stack.Screen name='detail' component={PostDetails}>
+            <Stack.Screen options={{headerShown:false}} name='detail' component={PostDetails}>
 
             </Stack.Screen>
         </Stack.Navigator>
