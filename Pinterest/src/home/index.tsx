@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { DashBoard } from './dashboard';
+import Search from './search';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +16,7 @@ function Home() {
       <Tab.Screen
         options={{headerShown: false}}
         name="search"
-        component={() => <></>}></Tab.Screen>
+        component={() => <Search></Search>}></Tab.Screen>
       <Tab.Screen
         options={{headerShown: false}}
         name="add"
