@@ -95,7 +95,7 @@ function Follow({photoGrapherLink, photographer}) {
 export function PostDetails(props: IProps) {
   const [imageDetails, setImageDetails] = useState({});
   const [suggestedImages, setSuggestedImages] = useState([]);
-  console.log(imageDetails);
+  console.log(imageDetails,'img',props.route.params.id);
   useEffect(() => {
     fetch(`https://api.pexels.com/v1/photos/${props.route.params.id}`, {
       headers: {

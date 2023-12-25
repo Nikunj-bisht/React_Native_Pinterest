@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1026417864368",
+    "project_id": "pinterest-460ed",
+    "storage_bucket": "pinterest-460ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026417864368:android:bb0dd7d8e9eb641a319575",
+        "android_client_info": {
+          "package_name": "com.pinterest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOTpQXHmhIcspO5F3VDICyAtkRFQKjke4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

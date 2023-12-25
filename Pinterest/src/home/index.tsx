@@ -16,11 +16,11 @@ function Home() {
       <Tab.Screen
         options={{headerShown: false}}
         name="search"
-        component={() => <Search></Search>}></Tab.Screen>
-      <Tab.Screen
+        component={Search}></Tab.Screen>
+      {/* <Tab.Screen
         options={{headerShown: false}}
         name="add"
-        component={() => <></>}></Tab.Screen>
+        component={<></>}></Tab.Screen>
       <Tab.Screen
         options={{headerShown: false}}
         name="comment"
@@ -28,7 +28,7 @@ function Home() {
       <Tab.Screen
         options={{headerShown: false}}
         name="profile"
-        component={() => <></>}></Tab.Screen>
+        component={() => <></>}></Tab.Screen> */}
     </Tab.Navigator>
   );
 }
