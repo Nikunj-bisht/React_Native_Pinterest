@@ -1,33 +1,32 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from '../intro/splash';
 import {Linking, View} from 'react-native';
 import SignUp from '../intro/signup';
 import Home from '../home';
-import { PostDetails } from '../posts';
+import {PostDetails} from '../posts';
 import messaging from '@react-native-firebase/messaging';
-
 
 const Stack = createStackNavigator();
 const deepLinksConf = {
-  screens:{
-     home:{
-       screens:{
-home:'home'
-       }
-     },detail:{
-      screens:{
-        detail:"detail/:id"
-      }
-     }
-
-  }
-}
-const linking:LinkingOptions = {
-   prefixes:["myapp://"],
-   config:deepLinksConf,
-   async getInitialURL(){
+  screens: {
+    home: {
+      screens: {
+        home: 'home',
+      },
+    },
+    detail: {
+      screens: {
+        detail: 'detail/:id',
+      },
+    },
+  },
+};
+const linking: LinkingOptions = {
+  prefixes: ['myapp://'],
+  config: deepLinksConf,
+  async getInitialURL() {
     const url = await Linking.getInitialURL();
 
     if (url != null) {
@@ -40,7 +39,8 @@ const linking:LinkingOptions = {
     // Get deep link from data
     // if this is undefined, the app will open the default/home page
     return message?.data?.link;
-   },subscribe(listener) {
+  },
+  subscribe(listener) {
     const onReceiveURL = ({url}: {url: string}) => listener(url);
 
     // Listen to incoming links from deep linking
@@ -48,9 +48,9 @@ const linking:LinkingOptions = {
 
     // Listen to firebase push notifications
     const unsubscribeNotification = messaging().onNotificationOpenedApp(
-      (message) => {
+      message => {
         const url = message?.data?.link;
-        console.log(listener,'list')
+        console.log(listener, 'list');
         if (url) {
           // Any custom logic to check whether the URL needs to be handled
 
@@ -66,11 +66,12 @@ const linking:LinkingOptions = {
       unsubscribeNotification();
     };
   },
-}
+};
 function Navigation() {
+  const ref = useRef();
   return (
     <View style={{flex: 1, backgroundColor: 'red'}}>
-      <NavigationContainer linking={linking}>
+      <NavigationContainer ref={ref} linking={linking}>
         <Stack.Navigator>
           <Stack.Screen
             component={Splash}
@@ -82,11 +83,17 @@ function Navigation() {
             options={{headerShown: false}}></Stack.Screen>
           <Stack.Screen
             options={{headerShown: false}}
-            component={Home}
-            name="home"></Stack.Screen>
-            <Stack.Screen options={{headerShown:false}} name='detail' component={PostDetails}>
-
+            name="home">
+              {(props)=><Home {...props} onPress={()=>props.navigation.navigate('create')}/>}
             </Stack.Screen>
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="detail"
+            component={PostDetails}></Stack.Screen>
+             {/* <Stack.Screen
+            options={{headerShown: false}}
+            name="create"
+            component={()=><View></View>}></Stack.Screen> */}
         </Stack.Navigator>
       </NavigationContainer>
     </View>
