@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useCallback, useRef} from 'react';
 import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from '../intro/splash';
@@ -7,6 +7,8 @@ import SignUp from '../intro/signup';
 import Home from '../home';
 import {PostDetails} from '../posts';
 import messaging from '@react-native-firebase/messaging';
+import Add from './add';
+import PinPhotos from '../home/pin';
 
 const Stack = createStackNavigator();
 const deepLinksConf = {
@@ -67,8 +69,11 @@ const linking: LinkingOptions = {
     };
   },
 };
+
 function Navigation() {
   const ref = useRef();
+  
+  console.log('render')
   return (
     <View style={{flex: 1, backgroundColor: 'red'}}>
       <NavigationContainer ref={ref} linking={linking}>
@@ -81,19 +86,30 @@ function Navigation() {
             component={SignUp}
             name="signup"
             options={{headerShown: false}}></Stack.Screen>
-          <Stack.Screen
-            options={{headerShown: false}}
-            name="home">
-              {(props)=><Home {...props} onPress={()=>props.navigation.navigate('create')}/>}
-            </Stack.Screen>
+          <Stack.Screen options={{headerShown: false}} name="home">
+            {props => (
+              <Home
+                {...props}
+                onPress={()=>{}}
+              />
+            )}
+          </Stack.Screen>
           <Stack.Screen
             options={{headerShown: false}}
             name="detail"
             component={PostDetails}></Stack.Screen>
-             {/* <Stack.Screen
+          <Stack.Screen
             options={{headerShown: false}}
             name="create"
-            component={()=><View></View>}></Stack.Screen> */}
+            component={Add}></Stack.Screen>
+             <Stack.Screen
+            options={{headerShown: false}}
+            name="pin"
+            component={PinPhotos}></Stack.Screen>
+             <Stack.Screen
+            options={{headerShown: false}}
+            name="pinupload"
+            component={()=><></>}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </View>
